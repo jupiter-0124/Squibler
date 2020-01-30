@@ -1,0 +1,9 @@
+<div *ngIf="summaryForm" style="height: 100%">
+  <div class="editor editor_notes">
+      <div class="editor_notes-success">All changes has been saved</div>
+    <form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
+      <!-- <input #summaryName type="text" name="title" formControlName="title" class="editor__input" placeholder="Untitled Idea" /> -->
+      <textarea (keydown)="onKeyDown($event)" (froalaEventName)="someFunction()" formControlName="description" [froalaEditor]="options" [froalaModel]="editorContent" placeholder="Start your thoughts here...">Hello, Froala!</textarea>
+    </form>
+  </div>
+</div> 

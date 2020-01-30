@@ -1,0 +1,37 @@
+<div class="board-item" [ngClass]="{'open': open, 'active': active}" (click)="onBoardClick.emit({board: board, boardOpen: open})">
+
+  <div class="board-item__header">
+    <span *ngIf="!board.color && !board.iconName" class="board-color" [style.background-color]="'#bfbfbf'"></span>
+    <span *ngIf="board.color" class="board-color" [style.background-color]="board.color"></span>
+    <i *ngIf="board.iconName" class="emoji-{{board.iconName}}"></i>
+
+    <input class="board-item__title" type="text" #boardName value="{{board.name}}" placeholder="Untitled" (click)="$event.stopPropagation()"
+      (keyup.enter)="boardName.blur();" (blur)="updateBoardName(boardName.value)" />
+    <div class="tabs__tab-title-arrow" (click)="toggleItems($event)"></div>
+    <div class="ideas__dropdown icon-more-vertical">
+      <div class="ideas__dropdown-content">
+        <div class="ideas__dropdown-item delete" (click)="deleteBoard(board)">Delete</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="board-item__list-item" *ngFor="let item of board.notes" (click)="onBoardClick.emit({board: board, boardOpen: open, note: item})">
+      <div class="board-item__item-header">
+        <div class="board-item__item-title">{{ item.title || getNoteText(item.text) || 'Empty note'}}</div>
+      </div>
+      <!-- <div class="board-item__item-content" [ngClass]="{'empty': !item.description, 'include-image' : item.imageArray ? item.imageArray.length : 'undefined'}" [innerHTML]="item.description ? item.description : 'No additional text...' "></div> -->
+      <!-- <div class="image-inside" [hidden]="item.imageArray ? !item.imageArray.length : true">
+            <img src="{{item.imageArray ? item.imageArray[0] : null }}" alt="img">
+            <div class="center-number">{{item.imageArray ? item.imageArray.length-1 > 0 ? '+'.concat(item.imageArray.length-1) : '' : ''}}</div>
+          </div> -->
+      <div class="board-item__dropdown icon-more-vertical">
+        <div class="board-item__dropdown-content">
+          <div class="board-item__dropdown-item" (click)="duplicateNote($event, item)">Duplicate</div>
+          <div class="board-item__dropdown-item delete" (click)="deleteNote($event, item)">Delete</div>
+        </div>
+      </div>
+      <div class="board-item__item-line"></div>
+    </div>
+  </div>
+</div>

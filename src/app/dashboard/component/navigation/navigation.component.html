@@ -1,0 +1,32 @@
+<div id="navigation" class="navigation" [ngClass]="{'active': open}">
+  <a routerLink="/dashboard/projects" class="navigation__logo">
+    <div class="navigation__logo-img">
+      <img src="../../../../../assets/images/logo.png" alt="">
+    </div>
+    <div class="navigation__logo-text">Squibler</div>
+  </a>
+  <div class="navigation__menu">
+    <a routerLink="/dashboard/projects" routerLinkActive="active" class="navigation__menu-item">
+      <i class="icon-book"></i> Projects</a>
+    <a routerLink="/dashboard/profile" routerLinkActive="active" class="navigation__menu-item">
+      <img src="{{userPhoto || '../../../../../../../assets/images/user.png'}}" /> Profile</a>
+  </div>
+  <div class="navigation__boards">
+    <div class="navigation__boards-title">BOARDS</div>
+    <div class="navigation__boards-list">
+      <div class="navigation__boards-list-item" (click)="openBoard(board.uuid)" *ngFor="let board of boards" [ngClass]="{'active': router.url.includes(board.uuid)}">
+        <div *ngIf="!board.color && !board.iconName" class="board-color" [style.background-color]="'#bfbfbf'"></div>
+        <div *ngIf="board.color" class="board-color" [style.background-color]="board.color"></div>
+        <i *ngIf="board.iconName" class="emoji-{{board.iconName}}"></i>
+        <div class="ideas__central-word">{{board.name || 'Untitled'}} </div>
+        <div class="ideas__dropdown icon-more-vertical">
+          <div class="ideas__dropdown-content">
+            <div class="ideas__dropdown-item delete" (click)="deleteBoard(board.uuid)">Delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation__boards-add" (click)="addNewBoard()">
+      <i class="icon-plus-circle"></i> New board</div>
+  </div>
+</div>

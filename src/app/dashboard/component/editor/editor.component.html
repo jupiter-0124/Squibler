@@ -1,0 +1,36 @@
+<div *ngIf="active" [hidden]="!updated" class="editor__notification summary-notify">
+    Your work has been saved!
+</div>
+<div class="editor" [ngClass]="{'full': editorFull}">
+    <div class="editor__sidebar" [ngClass]="{'active': sidebarActive}">
+        <editor-sidebar #sidebar [active]="sidebarActive" (onProjectClick)="onProjectClick($event)"
+                        (onBoardClick)="boardClick($event)" (onSectionClick)="onSectionClick($event)"
+                        (onToggle)="toggleSidebar()"></editor-sidebar>
+    </div>
+    <div class="editor__view"
+         [ngClass]="{'full-scr': editorFull, 'active': sidebarActive, 'project': workingOn === 'project'}">
+        <div [hidden]="!updated" class="editor__notification">Your work has been saved!</div>
+        <div class="balls" *ngIf="!project"></div>
+        <div *ngIf="project" class="editor__fullscr-btn " (click)="toggleFullScr()"></div>
+        <div id="toolbarContainer" class="toolbar"></div>
+        <div *ngIf="workingOn == 'project' && project" #projectEditor id="projectEditor" class="froala">
+            <textarea [froalaEditor]="projectTitleOptions" [(froalaModel)]="project.title"></textarea>
+            <div class="projectFroala" *ngIf="project">
+                <textarea [froalaEditor]="projectOptions" [(froalaModel)]="project.content"></textarea>
+            </div>
+            <div class="section" *ngFor="let section of project.sections;let i = index;  trackBy: trackByFn">
+                <textarea id="{{section.uuid}}" [froalaEditor]="sectionTitleOptions"
+                          [(froalaModel)]="section.title"></textarea>
+
+                <textarea id="{{section.uuid}}" [froalaEditor]="sectionOptions"
+                          [(froalaModel)]="section.text"></textarea>
+            </div>
+        </div>
+        <div *ngIf=" workingOn == 'section' && section" class="froala">
+            <textarea id="{{section.uuid}}" [froalaEditor]="sectionTitleOptions"
+                      [(froalaModel)]="section.title"></textarea>
+
+            <textarea #editor [froalaEditor]="sectionOptions" [(froalaModel)]="section.text"></textarea>
+        </div>
+    </div>
+</div>

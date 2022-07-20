@@ -57,7 +57,7 @@
     "npm": "^6.7.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
-    "terser": "^3.14.1",
+    "terser": "^4.8.1",
     "tslib": "^1.9.3",
     "tslint": "^5.12.1",
     "typescript": "2.9.2",
